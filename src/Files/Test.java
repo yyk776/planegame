@@ -6,27 +6,31 @@ public class Test {
 		ImpleFileService ifs = new FileService(); 	
 		// 读取所有存档，放在内存中
 		ifs.selectAll();
-		// 插入存档 a2
-		ifs.insertFile("a2");
-		// 将a2 中下标为三的关卡设为1（通关）
-		ifs.updateCharpter("a2", 3, true);
-		// 将a2 中下标为三的荣誉设为1 （激活）
-		ifs.updateHonors("a2", 3, true);
-		// 将a2 中下标为三的飞机设为1（拥有）
-		ifs.updatePlanes("a2",3, true);
+		//读取所有存档的名字，返回List<String>
+		System.out.println(ifs.getAllFilesName());
+		// 新建存档 a5
+		ifs.insertFile("a5");
+		//选择存档a3
+		ifs.selectFilebyName("a3");
+		// 将当前存档中下标为3的关卡设为1（通关）
+		ifs.updateCharpter(3);
+		// 将当前存档中下标为3的荣誉设为1 （激活）
+		ifs.updateHonors(3);
+		// 将当前存档中下标为3三的飞机设为1（拥有）
+		ifs.updatePlanes(3);
 		// 将存档写回硬盘
 		ifs.storage();
-		// 读取a2下标为0-3的关卡状态
-		System.out.println(ifs.readCharpters("a2")[0]);
-		System.out.println(ifs.readCharpters("a2")[1]);
-		System.out.println(ifs.readCharpters("a2")[2]);
-		System.out.println(ifs.readCharpters("a3")[3]);
-		// 读取a2下标为3的荣誉状态
-		System.out.println(ifs.readHonors("a2")[3]);
-		// 读取a2下标为3的飞机状态
-		System.out.println(ifs.readPlanes("a2")[3]);
+		// 读取当前存档中下标为0-3的关卡状态
+		System.out.println(ifs.readCharpters()[0]);
+		System.out.println(ifs.readCharpters()[1]);
+		System.out.println(ifs.readCharpters()[2]);
+		System.out.println(ifs.readCharpters()[3]);
+		// 读取当前存档中下标为3的荣誉状态
+		System.out.println(ifs.readHonors()[3]);
+		// 读取当前存档中下标为3的飞机状态
+		System.out.println(ifs.readPlanes()[3]);
+		//将此前修改写入硬盘
 		ifs.storage();
-		//读取所有存档的名字，返回List<String>
 		System.out.println(ifs.getAllFilesName());
 	}
 }

@@ -6,11 +6,17 @@ import java.util.List;
 public class FileService implements ImpleFileService{
 	private ImpleFileDao dao = new FileDao();
 	List<Files> list;
+	Files currfile;
+	
+	FileService(){
+		super();
+		selectAll();	
+	}
 	
 	@Override
 	public void selectAll() {
 		this.list = dao.readAll();
-	}
+	}	
 
 	@Override
 	public boolean insertFile(String filename) {
@@ -19,66 +25,50 @@ public class FileService implements ImpleFileService{
 				System.out.println("存档已存在");
 				return false;
 			}
-		}		
-		list.add(new Files(filename));	
+		}
+		Files newfile = new Files(filename);
+		list.add(newfile);	
+		this.currfile = newfile;
 		return true;
 	}
 
 	@Override
-	public boolean updatePlanes(String filename, int planeId, boolean b) {
-		Files f = selectFilebyName(filename);
-		if (f == null) return false;
-		else f.setFilePlanes(planeId, b);
+	public boolean updatePlanes(int planeId) {		
+		if (currfile == null) return false;
+		else currfile.setFilePlanes(planeId);
 		return true;		
 	}
 
 	@Override
-	public boolean updateHonors(String filename, int HonorId, boolean b) {
-		Files f = selectFilebyName(filename);
-		if (f == null) return false;
-		else f.setFileHonors(HonorId, b);
+	public boolean updateHonors(int HonorId) {
+		if (currfile == null) return false;
+		else currfile.setFileHonors(HonorId);
 		return true;	
 	}
 
 	@Override
-	public boolean updateCharpter(String filename, int CharpterId, boolean b) {
-		Files f = selectFilebyName(filename);
-		if (f == null) return false;
-		else f.setFileCharpters(CharpterId, b);
+	public boolean updateCharpter(int CharpterId) {
+		if (currfile == null) return false;
+		else currfile.setFileCharpters(CharpterId);
 		return true;	
 	}
 
 	@Override
-	public Files selectFilebyName(String name) {
-		Files f = null;
-		for(Files file : list) {
-			if(file.getFileName().equals(name)) {
-				f = file;
-				break;						
-			}
-		}
-		return f;		
+	public int[] readPlanes() {
+		if (currfile == null) return null;
+		return currfile.getFilePlanes();
 	}
 
 	@Override
-	public int[] readPlanes(String filename) {
-		Files f = selectFilebyName(filename);	
-		if (f == null) return null;
-		return f.getFilePlanes();
+	public int[] readHonors() {
+		if (currfile == null) return null;
+		return currfile.getFileHonors();
 	}
 
 	@Override
-	public int[] readHonors(String filename) {
-		Files f = selectFilebyName(filename);	
-		if (f == null) return null;
-		return f.getFileHonors();
-	}
-
-	@Override
-	public int[] readCharpters(String filename) {
-		Files f = selectFilebyName(filename);	
-		if (f == null) return null;
-		return f.getFileCharpters();
+	public int[] readCharpters() {
+		if (currfile == null) return null;
+		return currfile.getFileCharpters();
 	}
 
 	@Override
@@ -95,5 +85,16 @@ public class FileService implements ImpleFileService{
 			names.add(file.getFileName());		
 			}
 		return names;
-	}	
+	}
+	
+	@Override
+	public void selectFilebyName(String name) {
+		for(Files file : list) {
+			if(file.getFileName().equals(name)) {
+				this.currfile = file;
+				break;						
+			}
+		}
+	}
+
 }	
