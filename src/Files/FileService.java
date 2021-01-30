@@ -5,7 +5,7 @@ import java.util.List;
 
 public class FileService implements ImpleFileService{
 	private ImpleFileDao dao = new FileDao();
-	List<Files> list;
+	List<Files> list = new ArrayList<Files>();
 	Files currfile;
 	
 	FileService(){
@@ -15,7 +15,7 @@ public class FileService implements ImpleFileService{
 	
 	@Override
 	public void selectAll() {
-		this.list = dao.readAll();
+		if(dao.readAll() != null) this.list = dao.readAll();
 	}	
 
 	@Override
