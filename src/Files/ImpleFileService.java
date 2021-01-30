@@ -1,5 +1,7 @@
 package Files;
 
+import java.util.List;
+
 public interface ImpleFileService {
 	boolean insertFile(String filename);
 	boolean updatePlanes(String filename, int planeId, boolean b);
@@ -11,4 +13,5 @@ public interface ImpleFileService {
 	int[] readHonors(String filename);
 	int[] readCharpters(String filename);
 	boolean storage();
+	List<String> getAllFilesName();
 }

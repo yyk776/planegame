@@ -63,35 +63,28 @@ public class Files implements Serializable{
 	}
 	
 	public int [] getFilePlanes() {
-		System.out.println("获取飞机成功");
 		return FilePlanes;
 		
 	}
 	
 	public void setFilePlanes(int i, boolean j) {
 		this.FilePlanes[i] = j ? 1 : 0;
-		System.out.println("修改飞机成功");
 	}
 	
 	public int [] getFileHonors() {
-		System.out.println("获取荣誉成功");
 		return FileHonors;
 	}
 	
 	public void setFileHonors(int i, boolean j) {
 		this.FileHonors[i] = j ? 1 : 0;
-		System.out.println("修改荣誉成功");
-		
 	}
 	
 	public int [] getFileCharpters() {
-		System.out.println("获取章节成功");
 		return FileCharpters;		
 	}
 	
 	public void setFileCharpters(int i, boolean j) {
 		this.FileCharpters[i] = j ? 1 : 0;
-		System.out.println("修改章节成功");
 	}
 }
 	
