@@ -2,6 +2,7 @@ package Files;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,21 +12,27 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class FileDao implements ImpleFileDao {
-	private String path = "./file.properties";
+	private String path = "files";
 	
 	@Override
-	public List<File> readAll() {
-		List<File> list = new ArrayList<File>();
+	public List<Files> readAll() {
+		File f = new File(path);
+		if (!f.exists())
+			try {
+				f.createNewFile();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}		
+		List<Files> list = new ArrayList<Files>();
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path), "GB2312"));
-			JSONArray jsonarr = JSONArray.parseArray(br.readLine());
-			list = jsonarr.toJavaList(File.class);
+			Gson gson = new Gson();
+			list = gson.fromJson(br.readLine(), new TypeToken<List<Files>>(){}.getType());	
 			br.close();
 		} catch (UnsupportedEncodingException | FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -38,13 +45,14 @@ public class FileDao implements ImpleFileDao {
 	}
 
 	@Override
-	public boolean writeAll(List<File> list) {
+	public boolean writeAll(List<Files> list) {
 		boolean flag = false;
-		String jsonstr = JSONObject.toJSONString(list);
+		Gson gson = new Gson();
+		String str = gson.toJson(list);
 		BufferedWriter bw;
 		try {
 			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "GB2312"));
-			bw.write(jsonstr);
+			bw.write(str);
 			bw.close();
 			flag = true;
 		} catch (IOException e) {
@@ -52,23 +60,6 @@ public class FileDao implements ImpleFileDao {
 			e.printStackTrace();
 		}
 		return flag;
-	}
-
-	@Override
-	public String generateId() {
-		Random r = new Random();
-		StringBuilder sb = new StringBuilder();
-		char[] numbers = new char[]
-				{'0', '1', '2', '3', '4', '5',
-				'6', '7', '8', '9', 'a', 'b', 
-				'c', 'd', 'e', 'f', 'g', 'h', 
-				'i', 'j', 'k', 'l', 'm', 'n',
-				'o', 'p', 'q', 'r', 's', 't',
-				'u', 'v', 'w', 'x', 'y', 'z'};
-		for (int i = 0; i < numbers.length; i++) {
-			sb.append(numbers[r.nextInt(numbers.length)]);
-		}
-		return sb.toString();				
 	}
 
 }
