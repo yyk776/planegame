@@ -26,5 +26,7 @@ public class Test {
 		// 读取a2下标为3的飞机状态
 		System.out.println(ifs.readPlanes("a2")[3]);
 		ifs.storage();
+		//读取所有存档的名字，返回List<String>
+		System.out.println(ifs.getAllFilesName());
 	}
 }

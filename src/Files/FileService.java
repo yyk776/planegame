@@ -1,5 +1,6 @@
 package Files;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FileService implements ImpleFileService{
@@ -84,5 +85,15 @@ public class FileService implements ImpleFileService{
 	public boolean storage() {
 		dao.writeAll(list);
 		return false;
+	}
+
+	@Override
+	public List<String> getAllFilesName() {
+		if (list == null) return null;
+		List<String> names = new ArrayList<String>();
+		for(Files file : list) {
+			names.add(file.getFileName());		
+			}
+		return names;
 	}	
 }	
