@@ -67,24 +67,24 @@ public class Files implements Serializable{
 		
 	}
 	
-	public void setFilePlanes(int i, boolean j) {
-		this.FilePlanes[i] = j ? 1 : 0;
+	public void setFilePlanes(int i) {
+		this.FilePlanes[i] = 1;
 	}
 	
 	public int [] getFileHonors() {
 		return FileHonors;
 	}
 	
-	public void setFileHonors(int i, boolean j) {
-		this.FileHonors[i] = j ? 1 : 0;
+	public void setFileHonors(int i) {
+		this.FileHonors[i] = 1;
 	}
 	
 	public int [] getFileCharpters() {
 		return FileCharpters;		
 	}
 	
-	public void setFileCharpters(int i, boolean j) {
-		this.FileCharpters[i] = j ? 1 : 0;
+	public void setFileCharpters(int i) {
+		this.FileCharpters[i] = 1;
 	}
 }
 	
