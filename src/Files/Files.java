@@ -15,15 +15,6 @@ public class Files implements Serializable{
 		super();
 	}
 	
-	public Files(String fileId, String fileName, int[] filePlanes, int[] fileHonors, int[]fileCharpters) {
-		super();
-		this.FileId = fileId;
-		this.FileName = fileName;
-		this.FilePlanes = filePlanes;
-		this.FileHonors = fileHonors;
-		this.FileCharpters = fileCharpters;		
-	}
-	
 	public Files(String fileName) {
 		super();
 		setFileId();
