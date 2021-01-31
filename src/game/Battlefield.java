@@ -278,9 +278,10 @@ public class Battlefield  extends Frame{
     		case 4:x=90*i;y=50*(i%5);break;
     		}
         	
-        	Airplane p1=new Airplane(x,y,78,68,shotBullet);
-        	planeList.add(p1);
+        	Airplane p1=new Airplane(x,y,78,68,nmlBullet);
         	p1.intervel=p1.getRandomIntNum(0,6);
+        	planeList.add(p1);
+
             p1.eplane=1;
 
         }

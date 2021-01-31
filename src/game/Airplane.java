@@ -185,7 +185,7 @@ public void fly(){
 	     if (pY>500) eplane=2;
 	     if (pY<50) eplane=1;
 	     if ((pY>500)||(pY<50)) speed=-speed;  
-     pY+=speed; 
+     pY+=speed/2; 
      count=0;
      }
 }

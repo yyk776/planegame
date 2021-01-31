@@ -14,13 +14,13 @@ import Files.ImpleFileService;
 
 public class gameUI {
 	int chapterid=0;
-	
+	String filename;
 	public void buildPanel() {
 		JFrame frame=new JFrame("飞机大战开始菜单");
 		JPanel jp=new JPanel();    //创建面板
 		      
 		ImpleFileService ifs = new FileService();
-		ifs.selectFilebyName("a");
+		ifs.insertFile("bbb");
 
 		ifs.storage();
 		List<String> files = ifs.getAllFilesName();
@@ -45,6 +45,13 @@ public class gameUI {
 		jp.add(chapter);
 		jp.add(label4);
 		jp.add(plane);
+		
+		JButton btn1=new JButton("选择存档后查看成就");    //创建JButton对象
+		JButton btn2=new JButton("全部选择后进入游戏");    //创建JButton对象
+		jp.add(btn1);		
+		jp.add(btn2);
+		
+		
         ItemListener chapterlistener=new ItemListener() {
 			
 			@Override
@@ -94,12 +101,16 @@ public class gameUI {
 			}
 		};
 		cmb1.addItemListener(filelistener);
-
 		
-		JButton btn1=new JButton("选择存档后查看成就");    //创建JButton对象
-		JButton btn2=new JButton("全部选择后进入游戏");    //创建JButton对象
-		jp.add(btn1);		
-		jp.add(btn2);
+		ActionListener honerListener=new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Honor.buildPanel(ifs);
+			}
+		};
+		btn1.addActionListener(honerListener);;
+
 		
 		frame.add(jp);
 		frame.setBounds(100,200,600,300);

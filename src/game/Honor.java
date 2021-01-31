@@ -12,13 +12,10 @@ import Files.Files;
 import Files.ImpleFileService;
 
 public class Honor {
-	public static void buildPanel() {
+	public static void buildPanel(ImpleFileService ifs) {
 		JFrame frame=new JFrame("查看成就");
 		JPanel jp=new JPanel();    //创建面板
-		
-		ImpleFileService ifs = new FileService();
-		ifs.selectAll();
-		ifs.selectFilebyName("a3");
+
 		
 		JLabel jl00=new JLabel(new ImageIcon("Airplanes/airplane0-9.gif.png"));
 		JLabel jl01=new JLabel(new ImageIcon("Airplanes/airplane0.gif"));
