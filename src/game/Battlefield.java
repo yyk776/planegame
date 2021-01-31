@@ -12,7 +12,11 @@ import java.text.AttributedString;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.text.AbstractDocument.AttributeContext;
+
+import jdk.javadoc.internal.doclets.formats.html.resources.standard;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -280,9 +284,10 @@ public class Battlefield  extends Frame{
     		case 4:x=90*i;y=50*(i%5);break;
     		}
         	
-        	Airplane p1=new Airplane(x,y,78,68,shotBullet);
-        	planeList.add(p1);
+        	Airplane p1=new Airplane(x,y,78,68,nmlBullet);
         	p1.intervel=p1.getRandomIntNum(0,6);
+        	planeList.add(p1);
+
             p1.eplane=1;
 
         }
@@ -566,6 +571,8 @@ public class Battlefield  extends Frame{
            if (planeList.size()==0&&boss_attend) gameover=1;
            if (planeList.size()==0&&!boss_attend) {planeList.add(boss);boss_attend=true;} 
 	     if ((explodeList.size()==0) && (gameover!=0)) {
+	    	 int a=JOptionPane.showConfirmDialog(null, "点击确认返回主菜单","提示",JOptionPane.DEFAULT_OPTION);
+	    	 if(a==0)dispose();
 	         goon=false;
 	     }
 		   
@@ -762,14 +769,13 @@ public class Battlefield  extends Frame{
 	    start=new Button("start");	
 	    p1.add(start,4);
 		start.addActionListener(new Startaction());
-	    save=new Button("save");	
-	    p1.add(save,5);
-	    save.addActionListener(new Saveaction());
-	    load=new Button("load");	
-	    p1.add(load,6);
+	    //save=new Button("save");	
+	    //p1.add(save,5);
+	    //save.addActionListener(new Saveaction());
+	    //load=new Button("load");	
+	    //p1.add(load,6);
 
-	        
-        load.addActionListener(new Loadaction());
+        //load.addActionListener(new Loadaction());
         	    
    //
 	  	p2 = new Panel();
@@ -788,12 +794,13 @@ public class Battlefield  extends Frame{
 	    });*/
 	   }
   
-public void startgame() {
+public boolean startgame() {
 	JFrame fs = new JFrame("飞机大战");
     fs.setSize(1000, 900);
     //fs.setLocation(580, 240);
     fs.setLayout(null);
 	hurdlebackground();
+
 
 	addWindowListener(new WindowAdapter()
 	  {
@@ -805,9 +812,15 @@ public void startgame() {
     setSize(1000, 900);
     setVisible(true);
     fs.dispose();
+    fs.setAlwaysOnTop(isShowing());
+    fs.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     gameperpare();	
+
+    if(gameover==1)return true;
+    return false;
 }
 public static void main(String args[]) {
+
 	System.out.print("请输入关卡数：");
 	Scanner input = new Scanner(System.in);
 	int hurdle=input.nextInt();
@@ -817,9 +830,9 @@ public static void main(String args[]) {
 	ImplePlaneTypeService ipts = new PlaneTypeService();
 	planetype ptype = ipts.selectPlanebyId(pid);
 	Battlefield f = new Battlefield(hurdle,ptype);
-	f.startgame();
 
-    //f.gamebegin();    
+
+    f.gamebegin();    
 }	
 
 class Drawer extends Thread {
