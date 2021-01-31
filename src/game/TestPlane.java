@@ -21,7 +21,7 @@ public class TestPlane {
 		ipts.insertPlaneType(4, 90, 3, 2, "Airplanes/airplane2.gif", 2,10,2.5,"Bullets/Bullet11.gif");
 		ipts.insertPlaneType(3, 95, 4, 3, "Airplanes/airplane3.gif", 2,10,2.5,"Bullets/Bullet11.gif");
 		ipts.insertPlaneType(5, 80, 2, 4,"Airplanes/airplane4.gif", 3,10,2,"Bullets/Bullet12.png");
-		ipts.insertPlaneType(6, 70, 1, 5, "Airplanes/airplane5.gif", 3,10,2,"Bullets/Bullet12.png");
+		ipts.insertPlaneType(6, 70, 1, 5, "Airplanes/airplane20.gif", 3,10,2,"Bullets/Bullet12.png");
 		ipts.insertPlaneType(1.3, 120, 10, 6, "Airplanes/airplane6.gif", 4,10,3, "Bullets/cj2.png");
 		ipts.insertPlaneType(1.3, 190, 11, 7, "Airplanes/airplane7.gif", 4,10,3, "Bullets/cj2.png");
 		ipts.insertPlaneType(1.3, 200, 12, 8, "Airplanes/airplane8.gif", 1,10,1,"Bullets/Bullet11.gif");
