@@ -11,6 +11,7 @@ int pWidth,pHeight;
 int armor=0;
 double speed=2;
 int oil=100,life=100;
+int full_life=100;
 int Xoffset=0;
 int intervel;
 int count=0;
@@ -44,6 +45,7 @@ public Airplane(int x,int y,int w,int h,planetype ptype){
   bullettype=ptype.getBullettype();
   speed=ptype.speed;
   life=ptype.life;
+  full_life=ptype.life;
   armor=ptype.armor;
   controlled=false;
   bespecial=false;
@@ -102,7 +104,7 @@ public boolean hit(Bullet b){
 		if(controlled==false)
 			life=life-b.power;
 		else {
-			if(b.power>controller.baseDefense);
+			if(b.power>controller.baseDefense)
 				life=life-b.power+controller.baseDefense;
 		}
 		return true;
@@ -156,7 +158,11 @@ public boolean hit(Accessory a){
     			}
        }
        switch(a.atype.id) {
-       case 1:life+=50;break;
+       case 1:{
+    	   life+=50;
+    	   life=life>full_life?full_life:life;
+    	   break;
+       }
        case 3:oil+=50;break;
        case 8:life-=100;break;
        default:break;
@@ -185,7 +191,7 @@ public void fly(){
 }
 
 public void fire(ArrayList<Bullet> bulletsList,ArrayList<Bullettype> bullettypesList) {
-	System.out.println(bullettype.id);
+	if(controlled) {
 	if(bullettype.id==0)bulletsList.add(new Bullet(pX+pWidth/2-3,pY,13,13,bullettypesList.get(bullettype.id),controller,1));
 	else if(bullettype.id==3) bulletsList.add(new Bullet_auto(pX+pWidth/2-3,pY,13,13,bullettypesList.get(bullettype.id),controller,1));
 	else if(bullettype.id==1) {
@@ -201,7 +207,25 @@ public void fire(ArrayList<Bullet> bulletsList,ArrayList<Bullettype> bullettypes
 		bulletsList.add(new Bullet(pX+pWidth/2+4,pY,13,13,bullettypesList.get(bullettype.id),controller,1));
 		bulletsList.add(new Bullet(pX+pWidth/2-10,pY,13,13,bullettypesList.get(bullettype.id),controller,1));
 	}
-	else if(bullettype.id==4)bulletsList.add(new Bullet(pX+pWidth/2-3,pY,13,13,bullettypesList.get(bullettype.id),controller,1));
+	else if(bullettype.id==4)bulletsList.add(new Bullet(pX+pWidth+6,pY,13,13,bullettypesList.get(bullettype.id),controller,1));
+	} else {
+		if(bullettype.id==0)bulletsList.add(new Bullet(pX-6,pY+pHeight+1,13,13,bullettypesList.get(bullettype.id)));
+		else if(bullettype.id==3) bulletsList.add(new Bullet_auto(pX-6,pY+pHeight,13,13,bullettypesList.get(bullettype.id)));
+		else if(bullettype.id==1) {
+			Bullet b=new Bullet(pX,pY+pHeight+1,13,13,bullettypesList.get(bullettype.id));
+			b.direX=0.15;
+			bulletsList.add(b);
+			bulletsList.add(new Bullet(pX-6,pY+pHeight+1,13,13,bullettypesList.get(bullettype.id)));
+			b=new Bullet(pX-12,pY+pHeight+1,13,13,bullettypesList.get(bullettype.id));
+			b.direX=-0.15;
+			bulletsList.add(b);
+		}
+		else if(bullettype.id==2) {
+			bulletsList.add(new Bullet(pX+1,pY+pHeight,13,13,bullettypesList.get(bullettype.id)));
+			bulletsList.add(new Bullet(pX-13,pY+pHeight,13,13,bullettypesList.get(bullettype.id)));
+		}
+		else if(bullettype.id==4)bulletsList.add(new Bullet(pX+pWidth/2-3,pY+pHeight,13,13,bullettypesList.get(bullettype.id)));
+	}
 }
 public void moveToTop(){
 	

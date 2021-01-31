@@ -18,7 +18,7 @@ public class ControlplaneAdvance implements Serializable {
 public ControlplaneAdvance(){
 	super();
 	baseDamage=0;
-	baseDefense=50;
+	baseDefense=6;
 	speedincrement=0;
 	over=false;
 	level=1;
