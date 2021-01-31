@@ -1,12 +1,15 @@
 
 package game;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
 import javax.swing.event.*;
+
 
 import Files.FileService;
 import Files.Files;
@@ -18,8 +21,15 @@ public class gameUI {
 		int plane_id=-1;
 		String file;
 		public void buildPanel() {
-			JFrame frame=new JFrame("飞机大战开始菜单");
-			JPanel jp=new JPanel();    //创建面板
+			JFrame frame=new JFrame("飞机大战开始菜单");			
+			/*int windowWidth = frame.getWidth();                     //获得窗口宽
+	        int windowHeight = frame.getHeight();                   //获得窗口高
+	        Toolkit kit = Toolkit.getDefaultToolkit();              //定义工具包
+	        Dimension screenSize = kit.getScreenSize();             //获取屏幕的尺寸
+	        int screenWidth = screenSize.width;                     //获取屏幕的宽
+	        int screenHeight = screenSize.height;                   //获取屏幕的高
+	        frame.setLocation(screenWidth/2-windowWidth/2, screenHeight/2-windowHeight/2);//设置窗口居中显示*/
+	        JPanel jp=new JPanel();    //创建面板
 			jp.setLayout(null);      
 			
 			ImpleFileService ifs = new FileService();
@@ -155,10 +165,8 @@ public class gameUI {
 					if(chapterid==0||plane_id==-1)JOptionPane.showMessageDialog(null, "请选择存档、关卡以及飞机");
 					else{
 						ImplePlaneTypeService ipts = new PlaneTypeService();
-						new Battlefield(chapterid, ipts.selectPlanebyId(plane_id)).startgame();
-						int result = ifs.dolottery();
-						if (result!=-1 && ifs.readPlanes()[result] == 0) System.out.println("恭喜你获得"+result+"号机");
-						else System.out.println("很遗憾你没有获得新飞机");
+						new Battlefield(chapterid, ipts.selectPlanebyId(plane_id), ifs).startgame();
+		
 						ifs.storage();
 						ifs.selectAll();
 					}

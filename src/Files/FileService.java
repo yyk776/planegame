@@ -103,7 +103,10 @@ public class FileService implements ImpleFileService{
 		double doornot = Math.random();
 		if (doornot<0.5) {
 			result = (int)(10*Math.random());
-			updatePlanes(result);}
+			if (readPlanes()[result] == 0) updatePlanes(result);
+			else return -1;
+			}
+			
 		return result;
 	}
 

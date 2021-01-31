@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.text.AbstractDocument.AttributeContext;
 
+import Files.ImpleFileService;
 import jdk.javadoc.internal.doclets.formats.html.resources.standard;
 
 import javax.swing.JButton;
@@ -102,6 +103,7 @@ public class Battlefield  extends Frame{
 	boolean isSleep=true;
 	int hurdle;
 	Flag flag;
+	ImpleFileService ifs;
 	//////
 	
 	////////
@@ -119,8 +121,9 @@ public class Battlefield  extends Frame{
 	return d;
 
 	}
-	public Battlefield (int hurdle, planetype ptype)
-    { 	this.hurdle=hurdle;
+	public Battlefield (int hurdle, planetype ptype,ImpleFileService ifs)
+    { 	this.ifs =  ifs;
+		this.hurdle=hurdle;
 		OffScreen1     =  new BufferedImage(1000,900,BufferedImage.TYPE_INT_RGB);
 		drawOffScreen1 = (Graphics2D)OffScreen1.getGraphics();
 		OffScreen2     =  new BufferedImage(1000,900,BufferedImage.TYPE_INT_RGB);
@@ -572,7 +575,13 @@ public class Battlefield  extends Frame{
            if (planeList.size()==0&&!boss_attend) {planeList.add(boss);boss_attend=true;} 
 	     if ((explodeList.size()==0) && (gameover!=0)) {
 	    	 int a=JOptionPane.showConfirmDialog(null, "点击确认返回主菜单","提示",JOptionPane.DEFAULT_OPTION);
-	    	 if(a==0)dispose();
+	    	 if(a==0) {
+	    		 int result = ifs.dolottery();
+					if (result!=-1) JOptionPane.showMessageDialog(null,"恭喜你获得"+result+"号机,快到成就中查看吧！");
+					else JOptionPane.showMessageDialog(null,"很遗憾你没有获得新飞机");
+					ifs.storage();
+	    		 dispose();
+	    	 }
 	         goon=false;
 	     }
 		   
@@ -760,14 +769,14 @@ public class Battlefield  extends Frame{
 	    p1.setLayout(new GridLayout(1,10)); 
 
 
-	    p1.add(new Label("13"),0);
+	    //p1.add(new Label("13"),0);
 		t1 = new TextField(3);
-		p1.add(t1,1);
-	   	p1.add(new Label("14"),2);
+		//p1.add(t1,1);
+	   	//.add(new Label("14"),2);
 		t3 = new TextField(3);
-		p1.add(t3,3);
+		//p1.add(t3,3);
 	    start=new Button("start");	
-	    p1.add(start,4);
+	    //p1.add(start,4);
 		start.addActionListener(new Startaction());
 	    //save=new Button("save");	
 	    //p1.add(save,5);
@@ -794,7 +803,7 @@ public class Battlefield  extends Frame{
 	    });*/
 	   }
   
-public boolean startgame() {
+public void startgame() {
 	JFrame fs = new JFrame("飞机大战");
     fs.setSize(1000, 900);
     //fs.setLocation(580, 240);
@@ -815,9 +824,11 @@ public boolean startgame() {
     fs.setAlwaysOnTop(isShowing());
     fs.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     gameperpare();	
-
-    if(gameover==1)return true;
-    return false;
+    JOptionPane.showMessageDialog(null, "点击开始游戏！");
+    goon=true;
+    gameover=0;
+    start.disable(); 
+    gamebegin();
 }
 public static void main(String args[]) {
 
