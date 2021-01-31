@@ -8,7 +8,7 @@ public class FileService implements ImpleFileService{
 	List<Files> list = new ArrayList<Files>();
 	Files currfile;
 	
-	FileService(){
+	public FileService(){
 		super();
 		selectAll();	
 	}
