@@ -26,7 +26,7 @@ public class gameUI {
 		
 		JLabel label1=new JLabel("选择存档：");    //创建标签
 		JComboBox cmb1=new JComboBox();    //创建JComboBox
-		//cmb1.addItem("--请选择--");    //向下拉列表中添加一项
+		cmb1.addItem("--请选择--");    //向下拉列表中添加一项
 		//cmb1.addItem("存档1");
 		//cmb1.addItem("存档2");
 		//cmb1.addItem("存档3");
@@ -57,6 +57,7 @@ public class gameUI {
 		ifs.selectFilebyName("a3");
         
         List<String> hurdle = new ArrayList<String>();
+        hurdle.add("----请选择----");
         if (ifs.readCharpters() == null) {
         	hurdle.add("0");	
         }
@@ -100,6 +101,7 @@ public class gameUI {
 		//jp.add(cmb4);
         
         List<String> plane = new ArrayList<String>();
+        plane.add("----请选择----");
         if (ifs.readPlanes() == null) {
         	plane.add("0");	
         }        
@@ -127,7 +129,7 @@ public class gameUI {
 		jp.add(btn2);
 		
 		frame.add(jp);
-		frame.setBounds(100,200,400,150);
+		frame.setBounds(100,200,500,150);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
