@@ -2,16 +2,17 @@ package game;
 import java.awt.*;
 import java.awt.image.*;
 import java.awt.event.*;
+import java.awt.font.TextAttribute;
 import java.awt.geom.*;
 import java.util.*; 
 import java.io.*;
 import java.applet.*;
 import java.net.*;
+import java.text.AttributedString;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
-
-
+import javax.swing.text.AbstractDocument.AttributeContext;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -58,8 +59,10 @@ public class Battlefield  extends Frame{
 	private static final long serialVersionUID = 1L;
 	Image       OffScreen1,OffScreen2,O2;
 	Graphics2D     drawOffScreen1,drawOffScreen2,g;
-    Image        myplane,myplane1,eplane1,eplane2,bullet,bullet1,missile,explode,backgroud,a1,a2,a3,a4,gameoverimage,winimage,myplaneL1,myplaneL2,myplaneL3;
+    Image        myplane,myplane1,eplane1,eplane2,bullet,bullet1,missile,explode,backgroud,a1,a2,a3,a4,gameoverimage,winimage,myplaneL1,myplaneL2,myplaneL3,bossImage;
     int key;
+    boolean boss_attend=false;
+    Boss boss;
     boolean flag1,flag2;
     boolean controlflag[]= new boolean[6];
     boolean controlflag1[]= new boolean[5];
@@ -141,7 +144,7 @@ public class Battlefield  extends Frame{
 		//backgroud=getToolkit().getImage("Backgrounds/beach.jpg");
 		gameoverimage=getToolkit().getImage("accessory/gameover.gif");
 		winimage=getToolkit().getImage("accessory/win.gif");
-		
+		bossImage=getToolkit().getImage("Airplanes/airplane.png");
        	planeList = new ArrayList<Airplane>(); 
        	bulletsList = new ArrayList<Bullet>(); 
        	explodeList = new ArrayList<Explode>(); 
@@ -160,11 +163,11 @@ public class Battlefield  extends Frame{
 	
 	public void gameperpare(){
 		controller=new ControlplaneAdvance();
-        nmlBullet=new Bullettype(0,1,2.5,bullet);
-        shotBullet=new Bullettype(1,1,2.5,bullet);
-        biBullet=new Bullettype(2,1,2.5,bullet);
-        autoBullet=new Bullettype(3,1,2,bullet1);
-        cjBullet = new Bullettype(4,100,3, missile);
+        nmlBullet=new Bullettype(0,10,2.5,bullet);
+        shotBullet=new Bullettype(1,10,1,bullet);
+        biBullet=new Bullettype(2,10,2.5,bullet);
+        autoBullet=new Bullettype(3,10,2,bullet1);
+        cjBullet = new Bullettype(4,10,3, missile);
 		lives = new Accessorytype(1,a1);
 		boxs = new Accessorytype(2,a2);
 		oil=new Accessorytype(3,a3);
@@ -180,12 +183,11 @@ public class Battlefield  extends Frame{
 		bullettypesList.add(biBullet);
 		bullettypesList.add(autoBullet);
 		bullettypesList.add(cjBullet);
-
+		
       	Controlplane=new Airplane(500,500,80,66,cjBullet,controller);        
         Controlplane.speed=10;
         
-        
-        
+        boss=new Boss(400,20, 210, 166, shotBullet, 5000, 5);
         p2.addKeyListener(new MyKeyListener(controlflag,controlflag1));
         
         m2=new Scenemusic();
@@ -276,7 +278,7 @@ public class Battlefield  extends Frame{
     		case 4:x=90*i;y=50*(i%5);break;
     		}
         	
-        	Airplane p1=new Airplane(x,y,78,68,nmlBullet);
+        	Airplane p1=new Airplane(x,y,78,68,shotBullet);
         	planeList.add(p1);
         	p1.intervel=p1.getRandomIntNum(0,6);
             p1.eplane=1;
@@ -316,6 +318,7 @@ public class Battlefield  extends Frame{
 
 
     	//drawOffScreen.drawImage(winimage,450,300,null);
+		
 
 //����
  
@@ -324,7 +327,13 @@ public class Battlefield  extends Frame{
 		  backy-=.2;
 		//  System.out.println((int)backy+"");
 		  if (backy<0) backy=638; 
-
+		  Rectangle2D life=new Rectangle2D.Double(2, 700, 160, 30);
+		  drawOffScreen.setColor(Color.BLACK);
+		  drawOffScreen.draw(life);
+		  Rectangle2D life0=new Rectangle2D.Double(2, 700, 160*Controlplane.life/100, 30);
+			drawOffScreen.setColor(Color.RED);
+			drawOffScreen.fill(life0);
+		  
 		//  drawOffScreen.drawImage(backgroud,0,0,1000,900,null);  
     	   if (addplane){
 			if (planeList.size()<15) {
@@ -345,22 +354,35 @@ public class Battlefield  extends Frame{
 			}    		   
 		    addplane=false;
            }
+    	   
     	  Iterator<Airplane> pnums = planeList.iterator();
     	   while(pnums.hasNext()) { 
     		      Airplane p = pnums.next(); 
                   p.fly();
+                  if(p instanceof Boss) {
+            		  life=new Rectangle2D.Double(300, 5, 400, 25);
+            		  drawOffScreen.setColor(Color.BLACK);
+            		  drawOffScreen.draw(life);
+            		  life0=new Rectangle2D.Double(300, 5, 400*boss.life/boss.full_life, 25);
+            			drawOffScreen.setColor(Color.RED);
+            			drawOffScreen.fill(life0);
+                drawOffScreen.drawImage(bossImage,boss.pX,boss.pY,210,166,null);
+                  boss.count++;
+                  if(boss.count%150==0)
+      			  boss.fire(bulletsList, bullettypesList,2);
+                  else if(boss.count%2000==0)boss.fire(bulletsList, bullettypesList, 0);}
+                  else {
                  if (p.eplane==1) {
                 	 drawOffScreen.drawImage(Airplane.eplane1,p.pX-35,p.pY-35,70,70,null);  
                  }
-                 if (p.eplane==2) drawOffScreen.drawImage(Airplane.eplane2,p.pX-35,p.pY-35,70,70,null);  
-                 
+                 if (p.eplane==2) drawOffScreen.drawImage(Airplane.eplane2,p.pX-35,p.pY-35,70,70,null);                 
                   //�����ӵ�
      		     if ((p.getRandomIntNum(0, 300))==2)  {
-     		    	 if(p.bullettype==nmlBullet) {
-     		    		 Bullet b2=new Bullet(p.pX+p.pWidth/2-3,p.pY+p.pHeight+1,13,13,nmlBullet);
-     		    		 bulletsList.add(b2);     
-     		    	 }
+     		    	 	
+     		    		 p.fire(bulletsList, bullettypesList);     
+     		    	 
      		       }
+                  }
     		      //�ж��Ƿ񱻻���?
     		      Iterator<Bullet> bnums = bulletsList.iterator();
     	    	   while(bnums.hasNext()) { 
@@ -373,10 +395,9 @@ public class Battlefield  extends Frame{
     	  		    			Controlplane.controller.level+=1;
     	  		    		}
     	  		    	  }
-    	  		    	  if (b.bullettype != cjBullet) {
   							b = null;
   							bnums.remove();
-    	  		    	  }
+
     	 		
     	 		    	  m2.hitclip.play();
     	 		          };  		      
@@ -444,7 +465,7 @@ public class Battlefield  extends Frame{
         	   while(anums.hasNext()) { 
         		   Accessory a = anums.next(); 
         		   drawOffScreen.drawImage(a.atype.aImage,a.aX,a.aY,null);  
-
+        		   
      		      a.aY+=a.speed; 
      		      if (a.aY>900){
      		    	  a=null;
@@ -493,12 +514,11 @@ public class Battlefield  extends Frame{
  		      Bullet b = bnums.next(); 
  		      if(b instanceof Bullet_auto)((Bullet_auto) b).set_directions(planeList);
  		      drawOffScreen.translate(b.bX,b.bY);
- 		      double tmp=b.direY<0?Math.PI:0;
- 		      System.out.println(b.direY);
- 		      drawOffScreen.rotate(Math.asin(b.direX)+tmp);
+ 		      double tmp=b.direY<0?Math.PI+Math.asin(b.direX):-Math.asin(b.direX);
+ 		      drawOffScreen.rotate(tmp);
  		      //drawOffScreen.drawImage(bullet,b.bX,b.bY,null);  
  		      drawOffScreen.drawImage(b.bullettype.bimage,0,0,null); 
- 		     drawOffScreen.rotate(-Math.asin(b.direX)-tmp);
+ 		     drawOffScreen.rotate(-tmp);
  		      drawOffScreen.translate(-b.bX,-b.bY);
  		      //b.bY-=b.speed; 
  		      b.fly();
@@ -518,6 +538,7 @@ public class Battlefield  extends Frame{
  		    	  continue;
   		      };
  	        } 
+
     	    if (gameover==0) {
     	    	if(Controlplane.controller.over==false)
     	    		drawOffScreen.drawImage(myplane,Controlplane.pX,Controlplane.pY,null);
@@ -540,8 +561,8 @@ public class Battlefield  extends Frame{
 		       
 		       }
 //�ж��Ƿ�ʤ��?
-           if (planeList.size()==0) gameover=1;
-//		          
+           if (planeList.size()==0&&boss_attend) gameover=1;
+           if (planeList.size()==0&&!boss_attend) {planeList.add(boss);boss_attend=true;} 
 	     if ((explodeList.size()==0) && (gameover!=0)) {
 	         goon=false;
 	     }
