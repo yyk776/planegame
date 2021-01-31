@@ -14,4 +14,5 @@ public interface ImpleFileService {
 	int[] readCharpters();
 	int[] readHonors();
 	void selectFilebyName(String name);
+	int dolottery();
 }
