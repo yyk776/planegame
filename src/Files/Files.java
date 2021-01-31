@@ -9,7 +9,7 @@ public class Files implements Serializable{
 	private String FileName;
 	private int [] FilePlanes =new int[10];
 	private int [] FileHonors = new int[10];
-	private int [] FileCharpters = new int[4];
+	private int [] FileCharpters = new int[] {0,0,0,0};
 	
 	public Files() {
 		super();
