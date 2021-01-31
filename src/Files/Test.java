@@ -16,12 +16,15 @@ public class Test {
 		ifs.updateCharpter(3);
 		// 将当前存档中下标为3的荣誉设为1 （激活）
 		ifs.updateHonors(3);
-		// 将当前存档中下标为3三的飞机设为1（拥有）
-		ifs.updatePlanes(3);
+		// 将当前存档中下标为3三的飞机设为1（拥有）*/
+		ifs.selectFilebyName("abc");
 		// 将存档写回硬盘
-		ifs.storage();
-		// 读取当前存档中下标为0-3的关卡状态
+		//ifs.updateCharpter(1);
+		//ifs.storage();
+		//ifs.selectAll();
 		System.out.println(ifs.readCharpters()[0]);
+		// 读取当前存档中下标为0-3的关卡状态
+		/*System.out.println(ifs.readCharpters()[0]);
 		System.out.println(ifs.readCharpters()[1]);
 		System.out.println(ifs.readCharpters()[2]);
 		System.out.println(ifs.readCharpters()[3]);
@@ -31,7 +34,7 @@ public class Test {
 		System.out.println(ifs.readPlanes()[3]);
 		//将此前修改写入硬盘
 		ifs.storage();
-		System.out.println(ifs.getAllFilesName());*/
-		System.out.println(ifs.dolottery());
+		System.out.println(ifs.getAllFilesName());
+		System.out.println(ifs.dolottery());*/
 	}
 }

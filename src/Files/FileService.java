@@ -29,6 +29,7 @@ public class FileService implements ImpleFileService{
 		Files newfile = new Files(filename);
 		list.add(newfile);	
 		this.currfile = newfile;
+		storage();
 		return true;
 	}
 
@@ -36,6 +37,7 @@ public class FileService implements ImpleFileService{
 	public boolean updatePlanes(int planeId) {		
 		if (currfile == null) return false;
 		else currfile.setFilePlanes(planeId);
+		storage();
 		return true;		
 	}
 
@@ -43,6 +45,7 @@ public class FileService implements ImpleFileService{
 	public boolean updateHonors(int HonorId) {
 		if (currfile == null) return false;
 		else currfile.setFileHonors(HonorId);
+		storage();
 		return true;	
 	}
 
@@ -50,6 +53,7 @@ public class FileService implements ImpleFileService{
 	public boolean updateCharpter(int CharpterId) {
 		if (currfile == null) return false;
 		else currfile.setFileCharpters(CharpterId);
+		storage();
 		return true;	
 	}
 
@@ -72,9 +76,8 @@ public class FileService implements ImpleFileService{
 	}
 
 	@Override
-	public boolean storage() {
+	public void storage() {
 		dao.writeAll(list);
-		return false;
 	}
 
 	@Override
@@ -103,8 +106,17 @@ public class FileService implements ImpleFileService{
 		double doornot = Math.random();
 		if (doornot<0.5) {
 			result = (int)(10*Math.random());
-			updatePlanes(result);}
+			if (readPlanes()[result] == 0) updatePlanes(result);
+			else return -1;
+			}
+		storage();
+			
 		return result;
+	}
+
+	@Override
+	public String getcurrFileName() {
+		return currfile.getFileName();
 	}
 
 }	
