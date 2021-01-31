@@ -125,10 +125,10 @@ public class Battlefield  extends Frame{
 		myplane = getToolkit().getImage("Airplanes/airplane3.gif");
 
 		switch(hurdle) {
-		case 1:eplane1 = getToolkit().getImage("Airplanes/airplane4.gif"); eplane2 = getToolkit().getImage("Airplanes/airplane4-1.gif");break;
+		case 1:eplane1 = getToolkit().getImage("Airplanes/airplane4-1.gif"); eplane2 = getToolkit().getImage("Airplanes/airplane4.gif");break;
 		case 2:eplane1 = getToolkit().getImage("Airplanes/airplane7-1.gif"); eplane2 = getToolkit().getImage("Airplanes/airplane7.gif");break;
-		case 3:eplane1 = getToolkit().getImage("Airplanes/airplane3-1 2.gif"); eplane2 = getToolkit().getImage("Airplanes/airplane3 2.gif");break;
-		case 4:eplane1 = getToolkit().getImage("Airplanes/airplane.png"); eplane2 = getToolkit().getImage("Airplanes/airplane.png");break;
+		case 3:eplane1 = getToolkit().getImage("Airplanes/airplane3-1.gif"); eplane2 = getToolkit().getImage("Airplanes/airplane2.gif");break;
+		case 4:eplane1 = getToolkit().getImage("Airplanes/airplane.png"); eplane2 = getToolkit().getImage("Airplanes/airplanef.png");break;
 		}
 		a1=getToolkit().getImage("accessory/lives.gif"); 
 		a2=getToolkit().getImage("accessory/box1.gif"); 
