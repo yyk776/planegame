@@ -25,7 +25,7 @@ public class gameUI {
 		ifs.storage();
 		List<String> files = ifs.getAllFilesName();
 		String[] filename = files.toArray(new String[files.size()]);
-		
+
 		JComboBox<String> cmb1=new JComboBox<String>();    //创建JComboBox
 		cmb1.addItem("----请选择----");    //向下拉列表中添加一项
 		for(String e:filename) {
@@ -66,7 +66,7 @@ public class gameUI {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if(ItemEvent.SELECTED==e.getStateChange()) {
-				
+
 				//重置存档
 				ifs.selectFilebyName(e.getItem().toString());
 				//重置选关列表
@@ -95,7 +95,6 @@ public class gameUI {
 		};
 		cmb1.addItemListener(filelistener);
 
-		
 		JButton btn1=new JButton("选择存档后查看成就");    //创建JButton对象
 		JButton btn2=new JButton("全部选择后进入游戏");    //创建JButton对象
 		jp.add(btn1);		
@@ -103,6 +102,7 @@ public class gameUI {
 		
 		frame.add(jp);
 		frame.setBounds(100,200,600,300);
+
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
