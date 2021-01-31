@@ -115,7 +115,7 @@ public class Battlefield  extends Frame{
 	return d;
 
 	}
-	public Battlefield (int hurdle)
+	public Battlefield (int hurdle, planetype ptype)
     { 	this.hurdle=hurdle;
 		OffScreen1     =  new BufferedImage(1000,900,BufferedImage.TYPE_INT_RGB);
 		drawOffScreen1 = (Graphics2D)OffScreen1.getGraphics();
@@ -149,6 +149,8 @@ public class Battlefield  extends Frame{
        	bulletsList = new ArrayList<Bullet>(); 
        	explodeList = new ArrayList<Explode>(); 
        	accessoryList = new ArrayList<Accessory>(); 
+      	Controlplane=new Airplane(500,500,80,66,ptype);
+      	
     }
 
 	
@@ -183,9 +185,9 @@ public class Battlefield  extends Frame{
 		bullettypesList.add(biBullet);
 		bullettypesList.add(autoBullet);
 		bullettypesList.add(cjBullet);
-		
-      	Controlplane=new Airplane(500,500,80,66,cjBullet,controller);        
-        Controlplane.speed=10;
+		Controlplane.controller = controller;
+		Controlplane.controlled=true;
+        Controlplane.speed*=3;
         
         boss=new Boss(400,20, 210, 166, shotBullet, 5000, 5);
         p2.addKeyListener(new MyKeyListener(controlflag,controlflag1));
@@ -541,7 +543,7 @@ public class Battlefield  extends Frame{
 
     	    if (gameover==0) {
     	    	if(Controlplane.controller.over==false)
-    	    		drawOffScreen.drawImage(myplane,Controlplane.pX,Controlplane.pY,null);
+    	    		drawOffScreen.drawImage(Controlplane.myplaneimage,Controlplane.pX,Controlplane.pY,null);
     	    			}
     	    if (gameover==-1) drawOffScreen.drawImage(gameoverimage,450,300,null);  
     	    if (gameover==1) drawOffScreen.drawImage(winimage,450,300,null);  
@@ -785,28 +787,37 @@ public class Battlefield  extends Frame{
 				 t1.setText(s);}
 	    });*/
 	   }
-public static void main(String args[]) {
-	System.out.print("请输入关卡数：");
-	Scanner input = new Scanner(System.in);
-	int hurdle=input.nextInt();
+  
+public void startgame() {
 	JFrame fs = new JFrame("飞机大战");
     fs.setSize(1000, 900);
     //fs.setLocation(580, 240);
     fs.setLayout(null);
-	Battlefield f = new Battlefield(hurdle);
-	f.hurdlebackground();
+	hurdlebackground();
 
-	f.addWindowListener(new WindowAdapter()
+	addWindowListener(new WindowAdapter()
 	  {
 	   public void windowClosing(WindowEvent e) {
 	    System.exit(0);
 	   }
 	  });
-    f.showcomponent();
-    f.setSize(1000, 900);
-    f.setVisible(true);
+    showcomponent();
+    setSize(1000, 900);
+    setVisible(true);
     fs.dispose();
-    f.gameperpare();
+    gameperpare();	
+}
+public static void main(String args[]) {
+	System.out.print("请输入关卡数：");
+	Scanner input = new Scanner(System.in);
+	int hurdle=input.nextInt();
+	System.out.print("请输入要玩的飞机编号：");
+	Scanner input1 = new Scanner(System.in);
+	int pid = input1.nextInt();
+	ImplePlaneTypeService ipts = new PlaneTypeService();
+	planetype ptype = ipts.selectPlanebyId(pid);
+	Battlefield f = new Battlefield(hurdle,ptype);
+	f.startgame();
 
     //f.gamebegin();    
 }	

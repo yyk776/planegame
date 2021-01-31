@@ -18,6 +18,7 @@ int count=0;
 int bulletnum=100;
 int eplane;
 boolean controlled;
+Image myplaneimage;
 static Image eplane1 ; 
 static Image eplane2 ; 
 Bullettype bullettype;
@@ -49,6 +50,7 @@ public Airplane(int x,int y,int w,int h,planetype ptype){
   armor=ptype.armor;
   controlled=false;
   bespecial=false;
+  myplaneimage = ptype.getImage();
   
 }
 public Airplane(int x,int y,int w,int h,Bullettype btype,Accessorytype atype_in){
@@ -192,22 +194,22 @@ public void fly(){
 
 public void fire(ArrayList<Bullet> bulletsList,ArrayList<Bullettype> bullettypesList) {
 	if(controlled) {
-	if(bullettype.id==0)bulletsList.add(new Bullet(pX+pWidth/2-3,pY,13,13,bullettypesList.get(bullettype.id),controller,1));
-	else if(bullettype.id==3) bulletsList.add(new Bullet_auto(pX+pWidth/2-3,pY,13,13,bullettypesList.get(bullettype.id),controller,1));
+	if(bullettype.id==0)bulletsList.add(new Bullet(pX+pWidth/2-3,pY,13,13, bullettype,controller,1));
+	else if(bullettype.id==3) bulletsList.add(new Bullet_auto(pX+pWidth/2-3,pY,13,13,bullettype,controller,1));
 	else if(bullettype.id==1) {
-		Bullet b=new Bullet(pX+pWidth/2-3,pY,13,13,bullettypesList.get(bullettype.id),controller,1);
+		Bullet b=new Bullet(pX+pWidth/2-3,pY,13,13,bullettype,controller,1);
 		b.direX=0.15;
 		bulletsList.add(b);
-		bulletsList.add(new Bullet(pX+pWidth/2-3,pY,13,13,bullettypesList.get(bullettype.id),controller,1));
-		b=new Bullet(pX+pWidth/2-3,pY,13,13,bullettypesList.get(bullettype.id),controller,1);
+		bulletsList.add(new Bullet(pX+pWidth/2-3,pY,13,13,bullettype,controller,1));
+		b=new Bullet(pX+pWidth/2-3,pY,13,13,bullettype,controller,1);
 		b.direX=-0.15;
 		bulletsList.add(b);
 	}
 	else if(bullettype.id==2) {
-		bulletsList.add(new Bullet(pX+pWidth/2+4,pY,13,13,bullettypesList.get(bullettype.id),controller,1));
-		bulletsList.add(new Bullet(pX+pWidth/2-10,pY,13,13,bullettypesList.get(bullettype.id),controller,1));
+		bulletsList.add(new Bullet(pX+pWidth/2+4,pY,13,13,bullettype,controller,1));
+		bulletsList.add(new Bullet(pX+pWidth/2-10,pY,13,13,bullettype,controller,1));
 	}
-	else if(bullettype.id==4)bulletsList.add(new Bullet(pX+pWidth+6,pY,13,13,bullettypesList.get(bullettype.id),controller,1));
+	else if(bullettype.id==4)bulletsList.add(new Bullet(pX+pWidth+6,pY,13,13,bullettype,controller,1));
 	} else {
 		if(bullettype.id==0)bulletsList.add(new Bullet(pX-6,pY+pHeight+1,13,13,bullettypesList.get(bullettype.id)));
 		else if(bullettype.id==3) bulletsList.add(new Bullet_auto(pX-6,pY+pHeight,13,13,bullettypesList.get(bullettype.id)));
