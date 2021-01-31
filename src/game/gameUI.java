@@ -91,6 +91,7 @@ public class gameUI {
 					if(ItemEvent.SELECTED==e.getStateChange()) {
 					
 					//重置存档
+					ifs.selectAll();
 					file=e.getItem().toString();
 					ifs.selectFilebyName(file);
 					//重置选关列表
@@ -165,7 +166,7 @@ public class gameUI {
 					if(chapterid==0||plane_id==-1)JOptionPane.showMessageDialog(null, "请选择存档、关卡以及飞机");
 					else{
 						ImplePlaneTypeService ipts = new PlaneTypeService();
-						new Battlefield(chapterid, ipts.selectPlanebyId(plane_id), ifs).startgame();
+						new Battlefield(chapterid, ipts.selectPlanebyId(plane_id), ifs.getcurrFileName()).startgame();
 		
 						ifs.storage();
 						ifs.selectAll();

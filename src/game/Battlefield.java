@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.text.AbstractDocument.AttributeContext;
 
+import Files.FileService;
 import Files.ImpleFileService;
 import jdk.javadoc.internal.doclets.formats.html.resources.standard;
 
@@ -103,7 +104,7 @@ public class Battlefield  extends Frame{
 	boolean isSleep=true;
 	int hurdle;
 	Flag flag;
-	ImpleFileService ifs;
+	String filename;
 	//////
 	
 	////////
@@ -121,8 +122,8 @@ public class Battlefield  extends Frame{
 	return d;
 
 	}
-	public Battlefield (int hurdle, planetype ptype,ImpleFileService ifs)
-    { 	this.ifs =  ifs;
+	public Battlefield (int hurdle, planetype ptype,String filename)
+    { 	this.filename=filename; 
 		this.hurdle=hurdle;
 		OffScreen1     =  new BufferedImage(1000,900,BufferedImage.TYPE_INT_RGB);
 		drawOffScreen1 = (Graphics2D)OffScreen1.getGraphics();
@@ -574,13 +575,19 @@ public class Battlefield  extends Frame{
            if (planeList.size()==0&&boss_attend) gameover=1;
            if (planeList.size()==0&&!boss_attend) {planeList.add(boss);boss_attend=true;} 
 	     if ((explodeList.size()==0) && (gameover!=0)) {
-	    	 int a=JOptionPane.showConfirmDialog(null, "点击确认返回主菜单","提示",JOptionPane.DEFAULT_OPTION);
-	    	 if(a==0) {
-	    		 int result = ifs.dolottery();
-					if (result!=-1) JOptionPane.showMessageDialog(null,"恭喜你获得"+result+"号机,快到成就中查看吧！");
-					else JOptionPane.showMessageDialog(null,"很遗憾你没有获得新飞机");
-					ifs.storage();
-	    		 dispose();
+	    	 if(gameover==1) {
+	    		 ImpleFileService ifs = new FileService();
+	    		JOptionPane.showConfirmDialog(null, "恭喜您游戏胜利！","提示",JOptionPane.DEFAULT_OPTION);
+	    		 ifs.selectFilebyName(filename);
+	    	 	ifs.updateCharpter(hurdle);
+	    	 	ifs.storage();
+	    		int result = ifs.dolottery();
+				if (result!=-1) JOptionPane.showMessageDialog(null,"恭喜你获得"+result+"号机,快到成就中查看吧！");
+				else JOptionPane.showMessageDialog(null,"很遗憾你没有获得新飞机");
+				ifs.storage();
+	    		dispose();
+	    	 }else {
+	    	 JOptionPane.showConfirmDialog(null, "很遗憾您失败了！","提示",JOptionPane.DEFAULT_OPTION);
 	    	 }
 	         goon=false;
 	     }

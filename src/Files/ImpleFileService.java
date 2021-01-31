@@ -5,7 +5,7 @@ import java.util.List;
 public interface ImpleFileService {
 	boolean insertFile(String filename);
 	public void selectAll();
-	boolean storage();
+	void storage();
 	List<String> getAllFilesName();
 	boolean updatePlanes(int planeId);
 	boolean updateHonors(int HonorId);
@@ -15,4 +15,5 @@ public interface ImpleFileService {
 	int[] readHonors();
 	void selectFilebyName(String name);
 	int dolottery();
+	String getcurrFileName();
 }
