@@ -131,7 +131,7 @@ public class Honor {
         frame.add(jp);
 		frame.setBounds(100,200,400,350);
 		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
 	public static void main(String[] args) {

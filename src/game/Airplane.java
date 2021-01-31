@@ -194,20 +194,20 @@ public void fly(){
 
 public void fire(ArrayList<Bullet> bulletsList,ArrayList<Bullettype> bullettypesList) {
 	if(controlled) {
-	if(bullettype.id==0)bulletsList.add(new Bullet(pX+pWidth/2-3,pY,13,13, bullettype,controller,1));
-	else if(bullettype.id==3) bulletsList.add(new Bullet_auto(pX+pWidth/2-3,pY,13,13,bullettype,controller,1));
+	if(bullettype.id==0)bulletsList.add(new Bullet(pX+pWidth/2+3,pY,13,13, bullettype,controller,1));
+	else if(bullettype.id==3) bulletsList.add(new Bullet_auto(pX+pWidth/2,pY,13,13,bullettype,controller,1));
 	else if(bullettype.id==1) {
-		Bullet b=new Bullet(pX+pWidth/2-3,pY,13,13,bullettype,controller,1);
+		Bullet b=new Bullet(pX+pWidth/2,pY,13,13,bullettype,controller,1);
 		b.direX=0.15;
 		bulletsList.add(b);
-		bulletsList.add(new Bullet(pX+pWidth/2-3,pY,13,13,bullettype,controller,1));
-		b=new Bullet(pX+pWidth/2-3,pY,13,13,bullettype,controller,1);
+		bulletsList.add(new Bullet(pX+pWidth/2,pY,13,13,bullettype,controller,1));
+		b=new Bullet(pX+pWidth/2,pY,13,13,bullettype,controller,1);
 		b.direX=-0.15;
 		bulletsList.add(b);
 	}
 	else if(bullettype.id==2) {
-		bulletsList.add(new Bullet(pX+pWidth/2+4,pY,13,13,bullettype,controller,1));
-		bulletsList.add(new Bullet(pX+pWidth/2-10,pY,13,13,bullettype,controller,1));
+		bulletsList.add(new Bullet(pX+pWidth/2+11,pY,13,13,bullettype,controller,1));
+		bulletsList.add(new Bullet(pX+pWidth/2,pY,13,13,bullettype,controller,1));
 	}
 	else if(bullettype.id==4)bulletsList.add(new Bullet(pX+pWidth+6,pY,13,13,bullettype,controller,1));
 	} else {
