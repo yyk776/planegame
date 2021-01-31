@@ -156,7 +156,11 @@ public class gameUI {
 					else{
 						ImplePlaneTypeService ipts = new PlaneTypeService();
 						new Battlefield(chapterid, ipts.selectPlanebyId(plane_id)).startgame();
+						int result = ifs.dolottery();
+						if (result!=-1 && ifs.readPlanes()[result] == 0) System.out.println("恭喜你获得"+result+"号机");
+						else System.out.println("很遗憾你没有获得新飞机");
 						ifs.storage();
+						ifs.selectAll();
 					}
 				}
 			};

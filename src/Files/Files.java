@@ -7,9 +7,9 @@ public class Files implements Serializable{
 	private static final long serialVersionUID= 1L;
 	private String FileId;
 	private String FileName;
-	private int [] FilePlanes =new int[10];
+	private int [] FilePlanes =new int[]{1,0,0,0,0,0,0,0,0,0};
 	private int [] FileHonors = new int[10];
-	private int [] FileCharpters = new int[4];
+	private int [] FileCharpters = new int[] {0,0,0,0,};
 	
 	public Files() {
 		super();
