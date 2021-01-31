@@ -5,7 +5,7 @@ public class Test {
 		// 新建一个FileService层
 		ImpleFileService ifs = new FileService(); 	
 		// 读取所有存档，放在内存中
-		ifs.selectAll();
+		/*ifs.selectAll();
 		//读取所有存档的名字，返回List<String>
 		System.out.println(ifs.getAllFilesName());
 		// 新建存档 a5
@@ -31,6 +31,7 @@ public class Test {
 		System.out.println(ifs.readPlanes()[3]);
 		//将此前修改写入硬盘
 		ifs.storage();
-		System.out.println(ifs.getAllFilesName());
+		System.out.println(ifs.getAllFilesName());*/
+		System.out.println(ifs.dolottery());
 	}
 }
